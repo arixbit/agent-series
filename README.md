@@ -100,12 +100,39 @@ cd 05-session-memory && go run .
 
 ### 05-session-memory
 
-```
-Q1: 北京天气怎么样？
-A1: 北京 15°C，晴，西北风3级。
+默认进入交互式 CLI。连续输入多轮问题，可以观察同一个 Session 如何保留上下文：
 
-Q2: 那上海呢？
-A2: 上海 18°C，多云，东南风2级。  ← 模型能理解"那"指天气
+```
+Session Memory CLI
+连续输入问题，感受模型如何记住上文。
+输入 /tokens 查看上下文用量
+输入 /msgs 查看消息列表
+输入 /threshold 切换 token 阈值（200 ↔ 110000）
+输入 /exit 退出
+
+> 北京天气怎么样？
+Agent: 北京 15°C，晴，西北风3级。
+
+> 那上海呢？
+Agent: 上海 18°C，多云，东南风2级。
+
+> 我刚才问了哪两个城市？
+Agent: 你刚才问了北京和上海。
+```
+
+也可以运行固定 demo：
+
+```bash
+cd 05-session-memory
+
+# 正常两轮对话，观察短期记忆
+go run . basic
+
+# 把 token 阈值降到 200，观察压缩触发
+go run . compress
+
+# 打印 messages 数组，观察安全截断边界
+go run . boundary
 ```
 
 ## 常见问题
