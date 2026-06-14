@@ -1,6 +1,6 @@
 # Agent 系列 — 手写 Agent 框架
 
-这是[《后端写了这么多年，为什么突然想学 Agent》](https://arixbit.me)系列文章的配套代码仓库。
+这是[《后端写了这么多年，为什么突然想学 Agent》](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIyNTYxNjA0Nw==&action=getalbum&album_id=4507045649216798720#wechat_redirect)系列文章的配套代码仓库。
 
 当前代码发布到第 5 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
 
@@ -23,8 +23,8 @@ agent-series/
 
 ## 环境变量
 
-| 变量 | 用途 | 需要它的项目 |
-|------|------|-------------|
+| 变量               | 用途              | 需要它的项目           |
+| ------------------ | ----------------- | ---------------------- |
 | `DEEPSEEK_API_KEY` | DeepSeek API 密钥 | 全部（除 token-count） |
 
 DeepSeek API Key 获取位置：[platform.deepseek.com](https://platform.deepseek.com) → API Keys。
@@ -130,13 +130,13 @@ go run .
 
 ## 系列文章
 
-| # | 文章 | 代码目录 |
-|---|------|---------|
-| 1 | 为什么想学 Agent | 无代码 |
-| 2 | LLM 对后端工程师是什么 | `02-hello-llm/` |
-| 3 | Agent 不是聊天机器人 | `03-first-agent/` |
-| 4 | 工具定义与契约 | `04-multi-tool/` |
-| 5 | 短期记忆与上下文窗口 | `05-session-memory/` |
+| #   | 文章                   | 代码目录             |
+| --- | ---------------------- | -------------------- |
+| 1   | 为什么想学 Agent       | 无代码               |
+| 2   | LLM 对后端工程师是什么 | `02-hello-llm/`      |
+| 3   | Agent 不是聊天机器人   | `03-first-agent/`    |
+| 4   | 工具定义与契约         | `04-multi-tool/`     |
+| 5   | 短期记忆与上下文窗口   | `05-session-memory/` |
 
 ## License
 
