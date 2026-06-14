@@ -1,0 +1,9 @@
+go 1.23
+
+use (
+	./02-hello-llm/first-api-call
+	./02-hello-llm/token-count
+	./03-first-agent
+	./04-multi-tool
+	./05-session-memory
+)

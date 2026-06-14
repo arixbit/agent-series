@@ -1,0 +1,26 @@
+# Go build artifacts
+*.exe
+*.test
+*.out
+
+# Local environment files
+.env
+
+# The actual binaries live in their source dirs like 03-first-agent/03-first-agent
+# Let's ignore these patterns
+02-hello-llm/token-count/token-count
+02-hello-llm/first-api-call/first-api-call
+03-first-agent/03-first-agent
+04-multi-tool/04-multi-tool
+05-session-memory/05-session-memory
+06-rag/06-rag
+07-planning/07-planning
+10-research-agent/10-research-agent
+11-fanout/11-fanout
+12-permissions/12-permissions
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*~
