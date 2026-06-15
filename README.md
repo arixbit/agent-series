@@ -2,7 +2,7 @@
 
 这是[《后端写了这么多年，为什么突然想学 Agent》](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIyNTYxNjA0Nw==&action=getalbum&album_id=4507045649216798720#wechat_redirect)系列文章的配套代码仓库。
 
-当前代码发布到第 5 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
+当前代码发布到第 6 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
 
 **前置条件：Go 1.23+**（`go.work` 需要 1.23 的 workspace 支持）。
 
@@ -16,6 +16,7 @@ agent-series/
 ├── 03-first-agent/         # 第3篇: 单工具天气 Agent + ReAct 循环
 ├── 04-multi-tool/          # 第4篇: 多工具 Agent (天气/计算器/搜索)
 ├── 05-session-memory/      # 第5篇: Session + Token 预算 + 压缩策略
+├── 06-rag/                 # 第6篇: RAG 知识库检索 + Embedding
 ├── scripts/test_all.sh     # 全量验证脚本
 ├── go.work                 # Go workspace
 └── .gitignore
@@ -23,9 +24,12 @@ agent-series/
 
 ## 环境变量
 
-| 变量               | 用途              | 需要它的项目           |
-| ------------------ | ----------------- | ---------------------- |
-| `DEEPSEEK_API_KEY` | DeepSeek API 密钥 | 全部（除 token-count） |
+| 变量               | 用途                             | 需要它的项目                         |
+| ------------------ | -------------------------------- | ------------------------------------ |
+| `DEEPSEEK_API_KEY` | DeepSeek Chat API 密钥           | 全部 Chat Agent（除 token-count）    |
+| `OPENAI_API_KEY`   | OpenAI 或兼容 Embedding API 密钥 | `06-rag`                             |
+| `OPENAI_BASE_URL`  | OpenAI 兼容 API Base URL         | `06-rag`（可选，本地/第三方服务）    |
+| `EMBEDDING_MODEL`  | Embedding 模型名                 | `06-rag`（可选，默认 OpenAI small）  |
 
 DeepSeek API Key 获取位置：[platform.deepseek.com](https://platform.deepseek.com) → API Keys。
 
@@ -42,6 +46,15 @@ cd 03-first-agent && go run .
 ```
 
 每个项目都内置了 `.env` 加载支持。已存在的环境变量不会被 `.env` 覆盖。
+
+第 6 篇如果使用本地 oMLX / Ollama / 第三方 embedding 服务，可以在 `06-rag/.env` 写：
+
+```bash
+OPENAI_BASE_URL=http://127.0.0.1:12345/v1
+OPENAI_API_KEY=your-local-key
+EMBEDDING_MODEL=bge-m3-mlx-4bit
+DEEPSEEK_API_KEY=sk-xxx
+```
 
 ## 运行方式
 
@@ -77,6 +90,37 @@ cd 04-multi-tool && go run .
 
 # 第5篇: 会话记忆 + Token 管理
 cd 05-session-memory && go run .
+```
+
+### 第 6 篇 — RAG 知识库检索
+
+第 6 篇需要 Embedding API。可以用 OpenAI，也可以用本地 oMLX / Ollama 或其他 OpenAI 兼容服务。
+
+```bash
+cd 06-rag
+
+# Embedding 配置二选一：
+#
+# 方式一：OpenAI Embedding（默认 text-embedding-3-small）
+export OPENAI_API_KEY="your-openai-key"
+
+# 方式二：本地 oMLX / Ollama / 第三方兼容服务
+export OPENAI_BASE_URL="http://127.0.0.1:12345/v1"
+export OPENAI_API_KEY="your-local-key"
+export EMBEDDING_MODEL="bge-m3-mlx-4bit"
+
+# 看 embedding 向量和相似度
+go run . embed
+
+# 对比关键词搜索和语义搜索
+go run . search
+
+# Agent + RAG，需要额外设置 DeepSeek Chat API key
+export DEEPSEEK_API_KEY="your-deepseek-key"
+go run . agent
+
+# 交互式 RAG CLI
+go run .
 ```
 
 ## 预期输出
@@ -135,6 +179,18 @@ go run . compress
 go run . boundary
 ```
 
+### 06-rag
+
+```bash
+=== Demo 1: Embedding — 文字变成向量 ===
+
+文本: 密码找回流程：用户点击忘记密码 → 输入邮箱 → 收到重置链接 → 设置新密码
+  维度: 1024
+
+「密码找回流程」vs「如何重置密码」的余弦相似度: 0.9317
+「密码找回流程」vs「北京天气」的余弦相似度:     0.6052
+```
+
 ## 常见问题
 
 ### DeepSeek API 返回 400
@@ -164,6 +220,7 @@ go run .
 | 3   | Agent 不是聊天机器人   | `03-first-agent/`    |
 | 4   | 工具定义与契约         | `04-multi-tool/`     |
 | 5   | 短期记忆与上下文窗口   | `05-session-memory/` |
+| 6   | 长期记忆与 RAG         | `06-rag/`            |
 
 ## License
 

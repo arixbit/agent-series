@@ -9,14 +9,19 @@ modules=(
   03-first-agent
   04-multi-tool
   05-session-memory
+  06-rag
 )
+
+build_dir=$(mktemp -d)
+trap 'rm -rf "$build_dir"' EXIT
 
 pass=0
 fail=0
 
 for mod in "${modules[@]}"; do
   echo -n "$mod: "
-  if (cd "$mod" && go build ./... && go vet ./... && go test ./...); then
+  bin_name=${mod//\//_}
+  if (cd "$mod" && go build -o "$build_dir/$bin_name" ./... && go vet ./... && go test ./...); then
     echo "OK"
     ((pass++))
   else
@@ -27,7 +32,7 @@ done
 
 echo "---"
 echo "gofmt check:"
-unformatted=$(gofmt -l . 2>&1)
+unformatted=$(gofmt -l "${modules[@]}" 2>&1)
 if [ -n "$unformatted" ]; then
   echo "$unformatted"
   echo "gofmt: FAIL (run gofmt -w .)"
@@ -35,12 +40,6 @@ if [ -n "$unformatted" ]; then
 else
   echo "gofmt: OK"
 fi
-
-# 清理 build 产物
-for mod in "${modules[@]}"; do
-  bin=$(basename "$mod")
-  test -f "$mod/$bin" && rm "$mod/$bin" || true
-done
 
 echo "---"
 echo "passed: $pass, failed: $fail"
