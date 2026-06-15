@@ -6,4 +6,5 @@ use (
 	./03-first-agent
 	./04-multi-tool
 	./05-session-memory
+	./06-rag
 )
