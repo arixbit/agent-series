@@ -10,6 +10,8 @@ modules=(
   04-multi-tool
   05-session-memory
   06-rag
+  07-planning
+  08-minimal-agent
 )
 
 build_dir=$(mktemp -d)

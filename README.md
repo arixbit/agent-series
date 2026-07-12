@@ -2,7 +2,7 @@
 
 这是[《后端写了这么多年，为什么突然想学 Agent》](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIyNTYxNjA0Nw==&action=getalbum&album_id=4507045649216798720#wechat_redirect)系列文章的配套代码仓库。
 
-当前代码发布到第 6 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
+当前代码发布到第 8 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
 
 **前置条件：Go 1.23+**（`go.work` 需要 1.23 的 workspace 支持）。
 
@@ -17,6 +17,8 @@ agent-series/
 ├── 04-multi-tool/          # 第4篇: 多工具 Agent (天气/计算器/搜索)
 ├── 05-session-memory/      # 第5篇: Session + Token 预算 + 压缩策略
 ├── 06-rag/                 # 第6篇: RAG 知识库检索 + Embedding
+├── 07-planning/            # 第7篇: 规划、执行循环、状态转移
+├── 08-minimal-agent/       # 第8篇: 手写最小 Agent loop
 ├── scripts/test_all.sh     # 全量验证脚本
 ├── go.work                 # Go workspace
 └── .gitignore
@@ -123,6 +125,30 @@ go run . agent
 go run .
 ```
 
+### 第 7 篇 — 规划与执行循环
+
+第 7 篇把前面几篇的工具调用、记忆和 RAG 收束到一个问题：Agent 为什么需要一个执行循环。
+
+```bash
+export DEEPSEEK_API_KEY="your-key"
+cd 07-planning && go run .
+```
+
+### 第 8 篇 — 手写最小 Agent
+
+第 8 篇先不抽框架，只把最小 Agent loop 跑起来：
+
+```bash
+export DEEPSEEK_API_KEY="your-key"
+cd 08-minimal-agent
+
+# 固定 demo
+go run . demo
+
+# 交互式 CLI
+go run .
+```
+
 ## 预期输出
 
 ### 03-first-agent
@@ -221,6 +247,8 @@ go run .
 | 4   | 工具定义与契约         | `04-multi-tool/`     |
 | 5   | 短期记忆与上下文窗口   | `05-session-memory/` |
 | 6   | 长期记忆与 RAG         | `06-rag/`            |
+| 7   | 规划与执行循环         | `07-planning/`       |
+| 8   | 手写最小 Agent         | `08-minimal-agent/`  |
 
 ## License
 
