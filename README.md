@@ -2,7 +2,7 @@
 
 这是[《后端写了这么多年，为什么突然想学 Agent》](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIyNTYxNjA0Nw==&action=getalbum&album_id=4507045649216798720#wechat_redirect)系列文章的配套代码仓库。
 
-当前代码发布到第 8 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
+当前代码发布到第 9 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
 
 **前置条件：Go 1.23+**（`go.work` 需要 1.23 的 workspace 支持）。
 
@@ -19,6 +19,8 @@ agent-series/
 ├── 06-rag/                 # 第6篇: RAG 知识库检索 + Embedding
 ├── 07-planning/            # 第7篇: 规划、执行循环、状态转移
 ├── 08-minimal-agent/       # 第8篇: 手写最小 Agent loop
+├── 09-agent-runtime/       # 第9篇: 抽成最小 Agent Runtime
+├── agent/                  # 第9篇开始复用的共享 runtime 包
 ├── scripts/test_all.sh     # 全量验证脚本
 ├── go.work                 # Go workspace
 └── .gitignore
@@ -149,6 +151,21 @@ go run . demo
 go run .
 ```
 
+### 第 9 篇 — 抽成最小 Agent Runtime
+
+第 9 篇把第 8 篇里的硬编码 loop 抽到共享 `agent/` runtime 包里。
+
+```bash
+export DEEPSEEK_API_KEY="your-key"
+cd 09-agent-runtime
+
+# 固定 demo
+go run . demo
+
+# 交互式 CLI
+go run .
+```
+
 ## 预期输出
 
 ### 03-first-agent
@@ -249,6 +266,7 @@ go run .
 | 6   | 长期记忆与 RAG         | `06-rag/`            |
 | 7   | 规划与执行循环         | `07-planning/`       |
 | 8   | 手写最小 Agent         | `08-minimal-agent/`  |
+| 9   | 最小 Agent Runtime     | `09-agent-runtime/`  |
 
 ## License
 

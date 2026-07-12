@@ -9,4 +9,6 @@ use (
 	./06-rag
 	./07-planning
 	./08-minimal-agent
+	./09-agent-runtime
+	./agent
 )

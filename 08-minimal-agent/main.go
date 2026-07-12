@@ -355,7 +355,11 @@ func evalPrimary(expr string) (float64, error) {
 		return 0, fmt.Errorf("括号不匹配")
 	}
 	if expr[0] == '-' {
-		return evalPrimary(expr[1:])
+		value, err := evalPrimary(expr[1:])
+		if err != nil {
+			return 0, err
+		}
+		return -value, nil
 	}
 	var result float64
 	if _, err := fmt.Sscanf(expr, "%f", &result); err != nil {

@@ -12,6 +12,8 @@ modules=(
   06-rag
   07-planning
   08-minimal-agent
+  agent
+  09-agent-runtime
 )
 
 build_dir=$(mktemp -d)
@@ -23,7 +25,14 @@ fail=0
 for mod in "${modules[@]}"; do
   echo -n "$mod: "
   bin_name=${mod//\//_}
-  if (cd "$mod" && go build -o "$build_dir/$bin_name" ./... && go vet ./... && go test ./...); then
+  if (cd "$mod" && {
+    package_name=$(go list -f '{{.Name}}' . 2>/dev/null || true)
+    if [ "$package_name" = "main" ]; then
+      go build -o "$build_dir/$bin_name" .
+    else
+      go build ./...
+    fi
+  } && go vet ./... && go test ./...); then
     echo "OK"
     ((pass++))
   else
