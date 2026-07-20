@@ -2,7 +2,7 @@
 
 这是[《后端写了这么多年，为什么突然想学 Agent》](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIyNTYxNjA0Nw==&action=getalbum&album_id=4507045649216798720#wechat_redirect)系列文章的配套代码仓库。
 
-每个目录对应一篇文章的最终代码状态，**拿到就能跑**。第 10 篇之后的目录继续沿用第 9 篇抽出的共享 Runtime。
+当前代码发布到第 10 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
 
 **前置条件：Go 1.23+**（`go.work` 需要 1.23 的 workspace 支持）。
 
@@ -21,12 +21,6 @@ agent-series/
 ├── 08-minimal-agent/       # 第8篇: 手写最小 Agent loop
 ├── 09-agent-runtime/       # 第9篇: 抽成最小 Agent Runtime
 ├── 10-research-agent/      # 第10篇: 用 Runtime 实现研究助手
-├── 11-tools-mcp-skills/    # 第11篇: 内置工具、MCP 与 Skills
-├── 12-fanout/              # 第12篇: Sub-agent 并发委派
-├── 13-permissions/         # 第13篇: 工具权限与安全边界
-├── 14-evals/               # 第14篇: 最小评测 Harness
-├── 15-tracing/             # 第15篇: Trace 与可观测性
-├── 16-resume/              # 第16篇: Checkpoint 与任务恢复
 ├── agent/                  # 第9篇开始复用的共享 runtime 包
 ├── scripts/test_all.sh     # 全量验证脚本
 ├── go.work                 # Go workspace
@@ -192,18 +186,6 @@ go run .
 当前 CLI 按回车提交一次请求，请把一个完整研究问题写在同一行。
 
 运行时会逐轮打印模型请求、工具名、工具参数、执行耗时和返回长度，方便把终端输出与 Agent loop 对照起来。工具返回的网页正文不会整段打印。连续提问时，CLI 还会打印本轮保存和带入的历史消息数量。
-
-### 第 11 篇 — MCP 与 Skills
-
-这个示例不需要模型 API Key。它启动一个本地 MCP Server，由 Client 发现并调用 mock 天气工具：
-
-```bash
-cd 11-tools-mcp-skills
-go build -o /tmp/weather-mcp ./server
-go run ./client /tmp/weather-mcp
-```
-
-`skills/research/SKILL.md` 用来说明 Skill 是工作步骤，不会凭空增加工具能力。
 
 ## 预期输出
 
