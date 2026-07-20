@@ -10,5 +10,6 @@ use (
 	./07-planning
 	./08-minimal-agent
 	./09-agent-runtime
+	./10-research-agent
 	./agent
 )

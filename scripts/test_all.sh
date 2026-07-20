@@ -14,6 +14,7 @@ modules=(
   08-minimal-agent
   agent
   09-agent-runtime
+  10-research-agent
 )
 
 build_dir=$(mktemp -d)
