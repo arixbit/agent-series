@@ -2,7 +2,7 @@
 
 这是[《后端写了这么多年，为什么突然想学 Agent》](https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIyNTYxNjA0Nw==&action=getalbum&album_id=4507045649216798720#wechat_redirect)系列文章的配套代码仓库。
 
-当前代码发布到第 10 篇。每个目录对应一篇已发布文章的最终代码状态，**拿到就能跑**。
+第 11 篇的代码已经接入 MCP 与 Skill；每个代码目录都对应一篇文章的实现状态，**拿到就能跑**。
 
 **前置条件：Go 1.23+**（`go.work` 需要 1.23 的 workspace 支持）。
 
@@ -21,6 +21,7 @@ agent-series/
 ├── 08-minimal-agent/       # 第8篇: 手写最小 Agent loop
 ├── 09-agent-runtime/       # 第9篇: 抽成最小 Agent Runtime
 ├── 10-research-agent/      # 第10篇: 用 Runtime 实现研究助手
+├── 11-tools-mcp-skills/    # 第11篇: 让 Agent 使用 MCP 与 Skill
 ├── agent/                  # 第9篇开始复用的共享 runtime 包
 ├── scripts/test_all.sh     # 全量验证脚本
 ├── go.work                 # Go workspace
@@ -186,6 +187,27 @@ go run .
 当前 CLI 按回车提交一次请求，请把一个完整研究问题写在同一行。
 
 运行时会逐轮打印模型请求、工具名、工具参数、执行耗时和返回长度，方便把终端输出与 Agent loop 对照起来。工具返回的网页正文不会整段打印。连续提问时，CLI 还会打印本轮保存和带入的历史消息数量。
+
+### 第 11 篇 — MCP 与 Skill
+
+第 11 篇把天气工具搬到独立的 MCP Server，再让 Agent 通过 MCP Client 发现和调用工具；同时加入一份按指令加载的 `weather-report` Skill。
+
+```bash
+cd 11-tools-mcp-skills
+
+# 先在当前目录的 .env 中填写：
+# DEEPSEEK_API_KEY=你的 DeepSeek Key
+
+# 终端一：启动 MCP Server
+go run ./server
+
+# 终端二：启动交互式天气 Agent
+go run ./client http://127.0.0.1:8080/mcp
+```
+
+启动 Server 后，它会在本机的 `http://127.0.0.1:8080/mcp` 提供天气工具。Client 连接这个地址，发现 `get_weather` 和 `list_supported_cities`，用户明确要求使用 `weather-report` Skill 后，模型才会加载 Skill 正文并按其中的步骤回答。
+
+天气数据是代码中的 mock 数据，不是实时天气；这一篇不需要 `SERPER_API_KEY`。
 
 ## 预期输出
 
