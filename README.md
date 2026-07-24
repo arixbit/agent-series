@@ -310,6 +310,9 @@ go run .
 | 7   | 规划与执行循环         | `07-planning/`       |
 | 8   | 手写最小 Agent         | `08-minimal-agent/`  |
 | 9   | 最小 Agent Runtime     | `09-agent-runtime/`  |
+| 10  | 用自己的 Runtime，做一个研究助手 | `10-research-agent/` |
+| 11  | 工具从哪里来——内置工具、MCP 与 Skills | `11-tools-mcp-skills/` |
+| 12  | 从理解执行循环，到看清 Pi Coding Agent 的工程骨架 | `12-coding-agent/` |
 
 ## License
 
